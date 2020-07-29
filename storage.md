@@ -20,7 +20,7 @@
   - Restrictions:
     - No quotas for all users
   - Proposed Restrictions and New Usage:
-    - Hard 60 day retention
+    - Hard 60 day retention starting after job completion
     - No quotas
     - Scratch allocations are given on a per job basis
       - $SCRATCH -> /scratch/jobs/$SLURM_JOB_ID
