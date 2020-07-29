@@ -2,35 +2,52 @@
 
 ## Overview of Storage
 
-1. Home: 20TB usable, 200GB quota for all users
-2. Scratch: 2.4PB usable, no quotas for all users
-  - New policy:
-    - 60 day retention (hard with email)
-    - /scratch/jobs/<job_id> -> $SCRATCH
-      export SCRATCH=/scratch/jobs/<job_id>
-      mkdir $SCRATCH
-      chown user:user $SCRATCH
-      chmod g-rwx $SCRATCH
-      - Educate users on new work/home -> scratch -> work/home workflow and cleaning up scratch
-    - Migration plan with timeline to move stuff off scratch to work
-      - End of the year to move to work
-      - December make /scratch/users read only
-      - Remove /scratch/users
-      - Sometime before end of year remove scratch symlinks
-      - Leave /scratch/group as is and continue to use it
-3. NFS Scratch: 3TB usable, restricted to specific users, no quotas for these users
-4. Work: ~800TB usable
-  - Quotas
+1. Home:
+  - Technical Details:
+    - 20TB usable
+    - Several fundamental directories
+      - /cm
+      - /hpc
+      - /users
+  - Restrictions:
+    - 200GB quota for all users of /users
+2. Scratch:
+  - Technical Details:
+    - 2.4PB usable
+    - Two fundamental directories
+      - /scratch/users
+      - /scratch/group
+  - Restrictions:
+    - No quotas for all users
+  - Proposed Restrictions and New Usage:
+    - Hard 60 day retention
+    - No quotas
+    - Scratch allocations are given on a per job basis
+      - $SCRATCH -> /scratch/jobs/$SLURM_JOB_ID
+      - Workflow: $HOME/$WORK -> $SCRATCH -> $HOME/$WORK, $SCRATCH removed
+    - Automatic email notification one week prior to deletion
+    - /scratch/group usage remains as is
+3. NFS Scratch:
+   - Technical Details:
+     - 3TB usable
+   - Restrictions:
+     - Restricted to specific users
+     - No quotas for authorized users
+4. Work:
+  - Technical Details:
+    - ~800TB usable
+    - High inodes to allow for many files
+  - Proposed Restrictions:
     - 8TB per person, no time limit
-  - High inodes to allow for many files
 
-## Timeline
+## Proposed Timeline for New $WORK and $SCRATCH Policies
 
 August 14
 - M2 backup after maintenance
+- $WORK available for testing
 
 August 15
-- New workflow testing
+- Begin new workflow testing
 
 August 17
 - Documentation and education materials are available
@@ -50,3 +67,4 @@ December 1
 December 31
 - Remove $HOME/scratch symlinks that point to /scratch/users/$USER
 - Remove /scratch/users
+
